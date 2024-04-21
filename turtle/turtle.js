@@ -1,11 +1,11 @@
 /**
  * @type {HTMLCanvasElement}
  */
-var canvas = document.getElementById("canvas");
-var ctx = canvas.getContext("2d");
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
 
 const ratio = (Math.PI * 2) / 360;
-const speed = 100;
+const speed = 10;
 
 class Turtle {
     commands = [];
@@ -26,11 +26,20 @@ class Turtle {
     _drawNext() {
         console.log("drawNext", this.commandIndex);
         this._reset();
-        for (var i = 0; i <= this.commandIndex; i++) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+
+        console.log("running commands");
+        for (let i = 0; i <= this.commandIndex; i++) {
             this._runCommand(this.commands[i]);
         }
+
+        let time = no
+        console.log("done running commands");
         // draw turtle
-        // ctx.fillRect(this.x - 10, this.y - 10, 20, 20);
+        ctx.fillStyle = "green";
+        ctx.fillRect(this.x - 10, this.y - 10, 20, 20);
+
         if (this.commandIndex < this.commands.length - 1) {
             this.commandIndex++;
             setTimeout(() => this._drawNext(), speed);
@@ -40,7 +49,7 @@ class Turtle {
     _runCommands() {
         console.log("running commands", this.commands.length);
         this._reset();
-        for (var command of this.commands) {
+        for (let command of this.commands) {
             this._runCommand(command);
         }
     }
@@ -71,7 +80,7 @@ class Turtle {
             case "penDown":
                 this.drawing = command.value;
                 break;
-        };
+        }
     }
 
     left(degrees) {
@@ -90,15 +99,12 @@ class Turtle {
         this._addCommand({ type: "penDown", value: value });
     }
 }
-var turtle = new Turtle();
+
+const turtle = new Turtle();
 
 setTimeout(() => turtle._drawNext(), speed);
 
-
 (function () {
-    var canvas = document.getElementById('canvas'),
-        context = canvas.getContext('2d');
-
     // resize the canvas to fill browser window dynamically
     window.addEventListener('resize', resizeCanvas, false);
 
@@ -110,7 +116,7 @@ setTimeout(() => turtle._drawNext(), speed);
          * Your drawings need to be inside this function otherwise they will be reset when 
          * you resize the browser window and the canvas goes will be cleared.
          */
-         turtle._runCommands();
+         // turtle._drawNext();
     }
     resizeCanvas();
 })();
